@@ -34,7 +34,19 @@ public class HttpMethods
 		rd.close();
 		return sb.toString();
 	}
+
+	public static HttpParams getHttpParameters() {
+		HttpParams httpParameters = new BasicHttpParams();
+		int timeoutConnection = TodoListApplication.HTTP_TIMEOUT_CONNECTION_MILLIS;
+		HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+		int timeoutSocket = TodoListApplication.HTTP_TIMEOUT_SOCKET_MILLIS;
+		HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+		return httpParameters;
+	}
 	
+	/**
+	 * Send Http GET request to _URL with params and return String response
+	 */
 	public static String GET(String _URL,
 							 String params) {
 		ALog.v(TAG, "");
@@ -45,11 +57,7 @@ public class HttpMethods
 				strURL += "?" + params;
 			}
 			try {
-				HttpParams httpParameters = new BasicHttpParams();
-				int timeoutConnection = TodoListApplication.HTTP_TIMEOUT_CONNECTION_MILLIS;
-				HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-				int timeoutSocket = TodoListApplication.HTTP_TIMEOUT_SOCKET_MILLIS;
-				HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+				HttpParams httpParameters = getHttpParameters();
 				HttpClient httpclient = new DefaultHttpClient(httpParameters);
 				HttpResponse response = httpclient.execute(new HttpGet(strURL));
 				InputStream content = response.getEntity().getContent();
@@ -61,16 +69,15 @@ public class HttpMethods
 		return result;
 	}
 
+	/**
+	 * Send Http POST request to _URL with nameValuePairs for POST data and return String response
+	 */
 	public static String POST(String _URL,
 							  List<NameValuePair> nameValuePairs) {
 		ALog.v(TAG, "");
 		String result = null;
 		if (_URL.startsWith("http://")) {
-			HttpParams httpParameters = new BasicHttpParams();
-			int timeoutConnection = TodoListApplication.HTTP_TIMEOUT_CONNECTION_MILLIS;
-			HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-			int timeoutSocket = TodoListApplication.HTTP_TIMEOUT_SOCKET_MILLIS;
-			HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+			HttpParams httpParameters = getHttpParameters();
 			HttpClient httpclient = new DefaultHttpClient(httpParameters);
 			HttpPost httppost = new HttpPost(_URL);
 			try {

@@ -129,6 +129,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 		mNoDataContainer = (RelativeLayout) fragmentRootView.findViewById(R.id.no_data_container);
 		mDataContainer = (LinearLayout) fragmentRootView.findViewById(R.id.data_container);
 		
+		mTodoListAdapter = new TodoListAdapter(getActivity());
 		((Button) fragmentRootView.findViewById(R.id.update_todos_button)).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -140,7 +141,6 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 			
 		});
 		
-		mTodoListAdapter = new TodoListAdapter(getActivity());
 		mListView.setAdapter((ListAdapter) mTodoListAdapter);
 		getTodos();
 		
@@ -200,21 +200,10 @@ public class TodoListListFragment extends TodoListBaseListFragment {
  		}
     }
     
-    private class ServerTaskRunnable extends Thread {
-    	private ServerTask getTodosTask = null;
-    	private Runnable runnable = null;
-    	public ServerTaskRunnable(ServerTask getTodosTask,
-    							Runnable runnable) {
-    		this.getTodosTask = getTodosTask;
-    		this.runnable = runnable;
-    	}
-    	@Override
-    	public void run() {
-    		runnable.run();
-    	}
-    }
-    
-    /*
+    /**
+     * Provide with a String to show as a dialog, and two Runnables:
+     * - one to run in background (doInBackground)
+     * - one to run after the task is finished (onPostExecute)
      * Note you must send a message to Handler in onPostExecute
      */
 	private class ServerTask extends AsyncTask<Void, Void, Void> {
@@ -225,13 +214,14 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 		private List<String> fields = new ArrayList<String>();
 		private ProgressDialog getTodosDialog = null;
 
-		private ServerTaskRunnable doInBackground = null;
-		private ServerTaskRunnable onPostExecute = null;
+		private Runnable doInBackground = null;
+		private Runnable onPostExecute = null;
 		
 		public ServerTask(Context context, String progressDialogStringResId) {
 			this.getTodosDialog = ProgressDialog.show(context,
 													  "",
-													  progressDialogStringResId, true);
+													  progressDialogStringResId,
+													  true);
 			this.getTodosDialog.setCancelable(true);
 			this.getTodosDialog.setOnCancelListener(new OnCancelListener() {
 				@Override
@@ -305,34 +295,37 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	    	 this.fields = fields;
 	     }
 		
-	     public ServerTaskRunnable getDoInBackground() {
+	     public Runnable getDoInBackground() {
 	    	 return doInBackground;
 	     }
 		
-	     public void setDoInBackground(ServerTaskRunnable doInBackground) {
+	     public void setDoInBackground(Runnable doInBackground) {
 	    	 this.doInBackground = doInBackground;
 	     }
 		
-	     public ServerTaskRunnable getOnPostExecute() {
+	     public Runnable getOnPostExecute() {
 	    	 return onPostExecute;
 	     }
 		
-	     public void setOnPostExecute(ServerTaskRunnable onPostExecute) {
+	     public void setOnPostExecute(Runnable onPostExecute) {
 	    	 this.onPostExecute = onPostExecute;
 	     }
 	}
 	
-    
+	/**
+	 * Asynchronously get Todo list from server and update UI via Handler
+	 */
     private void getTodos() {
     	ALog.v(TAG, "");
     	final ServerTask getTodosTask = new ServerTask(getActivity(), getString(R.string.getting_todos_dialog));
-    	getTodosTask.setDoInBackground(new ServerTaskRunnable(getTodosTask, new Runnable() {
+    	getTodosTask.setDoInBackground(new Runnable() {
 			@Override
 			public void run() {
-				getTodosTask.setStatus(TodoListWeb.getTodos(getTodosTask.getTodos(), getTodosTask.getFields()));    			
+				getTodosTask.setStatus(TodoListWeb.getTodos(getTodosTask.getTodos(),
+															getTodosTask.getFields()));    			
 			}
-    	}));
-    	getTodosTask.setOnPostExecute(new ServerTaskRunnable(getTodosTask, new Runnable() {
+    	});
+    	getTodosTask.setOnPostExecute(new Runnable() {
 			@Override
 			public void run() {
 				Message m = new Message();
@@ -345,19 +338,23 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 				}
 				mHandler.sendMessage(m);
 			}
-    	}));
+    	});
     	getTodosTask.execute();
     }
     
+    /**
+	 * Asynchronously update Todo list on server based on Checkboxes
+	 */
     private void setTodos(final List<Todo> todos) {
+    	ALog.v(TAG, "");
     	final ServerTask setTodosTask = new ServerTask(getActivity(), getString(R.string.setting_todos_dialog));
-    	setTodosTask.setDoInBackground(new ServerTaskRunnable(setTodosTask, new Runnable() {
+    	setTodosTask.setDoInBackground(new Runnable() {
 			@Override
 			public void run() {
 				setTodosTask.setStatus(TodoListWeb.setTodos(todos));    			
 			}
-    	}));
-    	setTodosTask.setOnPostExecute(new ServerTaskRunnable(setTodosTask, new Runnable() {
+    	});
+    	setTodosTask.setOnPostExecute(new Runnable() {
 			@Override
 			public void run() {
 				Message m = new Message();
@@ -368,7 +365,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 				}
 				mHandler.sendMessage(m);
 			}
-    	}));
+    	});
     	setTodosTask.execute();
     }
 }

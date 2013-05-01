@@ -31,7 +31,6 @@ public class TodoListFragmentActivity extends TodoListBaseFragmentActivity {
         return true;
     }
     
-    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	ALog.v(TAG, "");

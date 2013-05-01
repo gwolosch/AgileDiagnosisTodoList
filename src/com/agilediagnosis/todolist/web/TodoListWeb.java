@@ -13,6 +13,9 @@ public class TodoListWeb {
 	
 	private static final String TAG = TodoListWeb.class.getSimpleName();
 	
+	/**
+	 * Get Todos from web app server and fill provided lists with Todos/Todo titles
+	 */
 	public static boolean getTodos(List<Todo> todos,
 								   List<String> fields) {
 		boolean ret = false;
@@ -22,9 +25,6 @@ public class TodoListWeb {
 				ALog.v(TAG, "using JSON...");
 				String strJSON = HttpMethods.GET(TodoListApplication.TODO_LIST_WEB_APP_URL, null);
 				try {
-					//TODO test
-					//strJSON = "[{\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"FIRST Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app maoeu aoeu aoe uaeou oaeu aeou aeou oaeu aoeu aoeu aoeu oaeu aoeu aeou aeo\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}},{\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"Finish Android app\"}}, {\"pk\": 1, \"model\": \"todo_list.todo\", \"fields\": {\"completed\": false, \"title\": \"LAST Finish Android app\"}}]";
-					//end TODO
 					ret = JSONParser.parseTodos(strJSON,
 												todos,
 												fields);
@@ -42,6 +42,9 @@ public class TodoListWeb {
 		return ret;
 	}
 	
+	/**
+	 * Set Todos on web app server with provided List of Todos
+	 */
 	public static boolean setTodos(List<Todo> todos) {
 		ALog.v(TAG, "");
 		boolean ret = false;
@@ -50,8 +53,12 @@ public class TodoListWeb {
 				ALog.v(TAG, "using JSON...");
 				try {
 					List<NameValuePair> nameValuePairs = JSONParser.todosToNVP(todos);
-					String strJSON = HttpMethods.POST(TodoListApplication.TODO_LIST_WEB_APP_URL, nameValuePairs);
-					ret = JSONParser.parseStatus(strJSON);
+					if (nameValuePairs != null) {
+						String strJSON = HttpMethods.POST(TodoListApplication.TODO_LIST_WEB_APP_URL, nameValuePairs);
+						if (strJSON != null) {
+							ret = JSONParser.parseStatus(strJSON);
+						}
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}

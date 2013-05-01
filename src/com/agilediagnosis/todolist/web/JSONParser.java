@@ -26,6 +26,11 @@ public class JSONParser {
 	
 	private static final String STATUS_KEY = "status";
 	
+	/**
+	 * Take JSON String and fill provided lists with list of Todos/Todo titles
+	 * parsed from that String
+	 * e.g. String: [{"pk": 1, "model": "todo_list.todo", "fields": {"completed": false, "title": "Finish Android app"}}]
+	 */
 	public static boolean parseTodos(String strJSON,
 									 List<Todo> todos,
 									 List<String> fields) throws JSONException {
@@ -51,6 +56,10 @@ public class JSONParser {
 	
 	public static JSONObject todoToJSON(Todo todo) throws JSONException {
 		ALog.v(TAG, "");
+		if (todo == null) {
+			ALog.e(TAG, "todo is null!");
+			return null;
+		}
 		JSONObject todoJso = new JSONObject();
 		todoJso.put(PK_KEY, todo.getPk());
 		todoJso.put(MODEL_KEY, MODEL_VALUE);
@@ -61,14 +70,23 @@ public class JSONParser {
 		
 		todoJso.put(FIELDS_KEY, fieldsJso);
 		return todoJso;
-		//[{"pk": 1, "model": "todo_list.todo", "fields": {"completed": false, "title": "Finish Android app"}}]
 	}
 	
+	/**
+	 * Convert List of Todos to NameValuePair which can be used in a POST request
+	 */
 	public static List<NameValuePair> todosToNVP(List<Todo> todos) throws JSONException {
 		ALog.v(TAG, "");
+		if (todos == null) {
+			ALog.e(TAG, "todos is null!");
+			return null;
+		}
 		JSONArray jsa = new JSONArray();
 		for (Todo todo : todos) {
-			jsa.put(todoToJSON(todo));
+			JSONObject jso = todoToJSON(todo);
+			if (jso != null) {
+				jsa.put(jso);
+			}
 		}
 		
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
@@ -76,6 +94,9 @@ public class JSONParser {
 		return nameValuePairs;
 	}
 	
+	/**
+	 * Parse status of POST request from provide JSON String
+	 */
 	public static boolean parseStatus(String strJSON) throws JSONException {
 		ALog.v(TAG, "strJSON = " + strJSON);
 		if (strJSON == null) {
