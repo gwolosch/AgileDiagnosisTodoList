@@ -129,6 +129,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 		mNoDataContainer = (RelativeLayout) fragmentRootView.findViewById(R.id.no_data_container);
 		mDataContainer = (LinearLayout) fragmentRootView.findViewById(R.id.data_container);
 		
+		
 		mTodoListAdapter = new TodoListAdapter(getActivity());
 		((Button) fragmentRootView.findViewById(R.id.update_todos_button)).setOnClickListener(new OnClickListener() {
 
