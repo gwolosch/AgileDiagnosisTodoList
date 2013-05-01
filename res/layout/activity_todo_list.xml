@@ -10,4 +10,4 @@
 		 android:layout_centerHorizontal="true"
 		 class="com.agilediagnosis.todolist.TodoListListFragment"
 		 android:configChanges="orientation" ></fragment>
-</RelativeLayout> 
+</RelativeLayout>

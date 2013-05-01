@@ -42,22 +42,22 @@ public class TodoListListFragment extends TodoListBaseListFragment {
     private ListView mListView = null;
     private LinearLayout mDataContainer = null;
     private RelativeLayout mNoDataContainer = null;
-    
+
     private static final int MESSAGE_GET_TODOS_SUCCESS = 0;
     private static final int MESSAGE_GET_TODOS_FAILED = 1;
     private static final int MESSAGE_SET_TODOS_SUCCESS = 2;
     private static final int MESSAGE_SET_TODOS_FAILED = 3;
-    
+
     public class TodoListAdapter extends BaseAdapter {
 
         private Context context = null;
 		private List<Todo> todos = new ArrayList<Todo>();
         private List<String> fields = new ArrayList<String>();
-        
+
         public TodoListAdapter(Context context) {
             this.context = context;
         }
-        
+
         public List<Todo> getTodos() {
 			return todos;
 		}
@@ -93,10 +93,10 @@ public class TodoListListFragment extends TodoListBaseListFragment {
         public View getView(final int position, View convertView, ViewGroup viewGroup) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.fragment_list_view_item, null);
-            
+
             TextView titleTextView = (TextView) convertView.findViewById(R.id.title);
             titleTextView.setText(this.fields.get(position));
-            
+
             final CheckBox completedCheckBox = (CheckBox) convertView.findViewById(R.id.completed);
             completedCheckBox.setChecked(this.todos.get(position).isCompleted());
             completedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -117,7 +117,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
         }
 
     }
-    
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 							 ViewGroup container,
@@ -189,7 +189,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	    	}
         }
     };
-    
+
     private class ServerTaskResponse {
  		public List<Todo> todos = null;
  		public List<String> fields = null;
@@ -199,7 +199,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
  			this.fields = fields;
  		}
     }
-    
+
     /**
      * Provide with a String to show as a dialog, and two Runnables:
      * - one to run in background (doInBackground)
@@ -247,7 +247,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	     protected void onProgressUpdate(Void... arg0) {
 	    	 ALog.v(TAG, "");
 	     }
-	     
+	
 	     @Override
 	     protected void onPostExecute(Void result) {
 	    	 ALog.v(TAG, "");
@@ -261,7 +261,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	    	 this.doInBackground.run();
 	    	 return null;
 	     }
-	     
+	
 	     @Override
 	     protected void onCancelled () {
 	    	 ALog.v(TAG, "");
@@ -269,7 +269,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	    		 serverTaskRunning = false;
 	    	 }
 	     }
-     
+
 	     public boolean isStatus() {
 	    	 return status;
 	     }
@@ -277,7 +277,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	     public void setStatus(boolean status) {
 	    	 this.status = status;
 	     }
-	     
+	
 	     public List<Todo> getTodos() {
 	    	 return todos;
 	     }
@@ -289,7 +289,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	     public List<String> getFields() {
 	    	 return fields;
 	     }
-	     
+	
 		
 	     public void setFields(List<String> fields) {
 	    	 this.fields = fields;
@@ -341,7 +341,7 @@ public class TodoListListFragment extends TodoListBaseListFragment {
     	});
     	getTodosTask.execute();
     }
-    
+
     /**
 	 * Asynchronously update Todo list on server based on Checkboxes
 	 */

@@ -30,7 +30,7 @@ public class TodoListFragmentActivity extends TodoListBaseFragmentActivity {
         getMenuInflater().inflate(R.menu.todo_list, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	ALog.v(TAG, "");

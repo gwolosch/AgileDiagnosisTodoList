@@ -11,7 +11,7 @@ class LockableScrollView extends ScrollView {
     public LockableScrollView(Context context, AttributeSet set) {
 		super(context, set);
 	}
-    
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
     	return false;

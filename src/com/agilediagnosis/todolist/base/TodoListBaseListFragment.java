@@ -26,7 +26,7 @@ public class TodoListBaseListFragment extends ListFragment {
     		isPaused = false;
     	}
     }
-    
+
     @Override
     public void onPause() {
     	super.onPause();

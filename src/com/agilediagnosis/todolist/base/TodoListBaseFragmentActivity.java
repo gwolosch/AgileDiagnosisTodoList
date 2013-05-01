@@ -17,7 +17,7 @@ public class TodoListBaseFragmentActivity extends FragmentActivity {
 	public void setIsPaused(Boolean isPaused) {
 		this.isPaused = isPaused;
 	}
-    
+
     @Override
     protected void onResume() {
     	super.onResume();
@@ -26,7 +26,7 @@ public class TodoListBaseFragmentActivity extends FragmentActivity {
     		isPaused = false;
     	}
     }
-    
+
     @Override
     protected void onPause() {
     	super.onPause();
