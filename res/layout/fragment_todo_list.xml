@@ -25,22 +25,22 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:orientation="vertical"
-			android:background="#C0E4C4"
+			android:background="#AABCA9"
 			android:visibility="gone" >
 			<ListView android:id="@android:id/list"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:drawSelectorOnTop="false"/>
-				<RelativeLayout android:id="@+id/button_container"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content" >
-					<Button
-						android:id="@+id/update_todos_button"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_centerHorizontal="true"
-						android:text="@string/update_todos_button"/>
-				</RelativeLayout>
+			<RelativeLayout android:id="@+id/button_container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" >
+				<Button
+					android:id="@+id/update_todos_button"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:text="@string/update_todos_button"/>
+			</RelativeLayout>
 		</LinearLayout>
 	</LinearLayout>
 </com.agilediagnosis.todolist.LockableScrollView>

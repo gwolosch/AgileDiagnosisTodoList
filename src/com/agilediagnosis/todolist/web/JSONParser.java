@@ -27,8 +27,8 @@ public class JSONParser {
 	private static final String STATUS_KEY = "status";
 	
 	public static boolean parseTodos(String strJSON,
-										List<Todo> todos,
-										List<String> fields) throws JSONException {
+									 List<Todo> todos,
+									 List<String> fields) throws JSONException {
 		ALog.v(TAG, "strJSON = " + strJSON);
 		boolean ret = false;
 		if (strJSON == null || todos == null || todos == null || fields == null) {
