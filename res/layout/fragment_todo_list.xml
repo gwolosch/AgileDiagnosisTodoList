@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.agilediagnosis.todolist.LockableScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fillViewport="true"
+	android:background="@drawable/bg">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+		<RelativeLayout android:id="@+id/no_data_container"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="#AABCA9" >
+			<TextView android:id="@+id/no_data_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:text="@string/no_data"/>
+		</RelativeLayout>
+		<LinearLayout android:id="@+id/data_container"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:background="#C0E4C4"
+			android:visibility="gone" >
+			<ListView android:id="@android:id/list"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawSelectorOnTop="false"/>
+				<RelativeLayout android:id="@+id/button_container"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" >
+					<Button
+						android:id="@+id/update_todos_button"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_centerHorizontal="true"
+						android:text="@string/update_todos_button"/>
+				</RelativeLayout>
+		</LinearLayout>
+	</LinearLayout>
+</com.agilediagnosis.todolist.LockableScrollView>

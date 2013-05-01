@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TodoList</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="getting_todos_dialog">Loading Todos from server...</string>
+    <string name="setting_todos_dialog">Updating Todos on server...</string>
+    <string name="error_getting_todos">Error loading Todos from server! Check your connection.</string>
+    <string name="update_todos_button">Update Todos</string>
+    <string name="update_todos_success">Updated Todos successfully</string>
+    <string name="update_todos_failed">Update Todos failed!</string>
+    <string name="no_data">No Todos are available</string>
+
+</resources>
