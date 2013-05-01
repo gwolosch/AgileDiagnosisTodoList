@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-library android:name="android.test.runner" />
     </application>
 	<uses-permission android:name="android.permission.INTERNET" />
+	<instrumentation android:name="android.test.InstrumentationTestRunner"
+       android:targetPackage="com.agilediagnosis.todolist" android:label="Tests for My App" />
 </manifest>
