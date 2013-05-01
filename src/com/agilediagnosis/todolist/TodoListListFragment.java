@@ -132,7 +132,6 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 		mTodoListAdapter = new TodoListAdapter(getActivity());
 		((Button) fragmentRootView.findViewById(R.id.update_todos_button)).setOnClickListener(new OnClickListener() {
 
-			
 			@Override
 			public void onClick(View arg0) {
 				synchronized(serverTaskRunning) {
