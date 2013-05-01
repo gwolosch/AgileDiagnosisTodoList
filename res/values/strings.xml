@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">TodoList</string>
     <string name="action_refresh">Refresh Todos from server</string>
-    <string name="hello_world">Hello world!</string>
     <string name="getting_todos_dialog">Loading Todos from server...</string>
     <string name="setting_todos_dialog">Updating Todos on server...</string>
     <string name="error_getting_todos">Error loading Todos from server! Check your connection.</string>

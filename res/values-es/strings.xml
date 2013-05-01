@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TodoList</string>
+    <string name="action_refresh">Actualizar Todos desde un servidor</string>
+    <string name="getting_todos_dialog">Cargando Todos desde un servidor...</string>
+    <string name="setting_todos_dialog">Actualizando Todos en el servidor...</string>
+    <string name="error_getting_todos">Error Todos carga del servidor! Compruebe la conexión.</string>
+    <string name="update_todos_button">Actualizar Todos</string>
+    <string name="update_todos_success">Todos actualizado correctamente</string>
+    <string name="update_todos_failed">Update Todos fracasado!</string>
+    <string name="no_data">No hay Todos están disponibles</string>
+	<string name="server_task_already_running">Una tarea de servidor ya está en marcha. Haciendo caso omiso de solicitud de otra.</string>
+	<string name="server_task_running_wait">Una de las tareas del servidor está en ejecución. Espere a que finalice la actualización.</string>
+</resources>
