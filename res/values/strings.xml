@@ -11,5 +11,6 @@
     <string name="update_todos_success">Updated Todos successfully</string>
     <string name="update_todos_failed">Update Todos failed!</string>
     <string name="no_data">No Todos are available</string>
-
+	<string name="server_task_already_running">A server task is already running. Ignoring request for another.</string>
+	<string name="server_task_running_wait">A server task is running. Please wait for update to complete.</string>
 </resources>

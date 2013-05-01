@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="white">@android:color/white</drawable>
+    <drawable name="black">@android:color/black</drawable>
+    <drawable name="red">#f78a88</drawable>
+    <drawable name="gray">#cccccc</drawable>
+    <drawable name="brown">#B97956</drawable>
+    <drawable name="green">#1D9E0A</drawable>
+    <drawable name="light_gray">#D5DBD5</drawable>
+    <drawable name="soft_green">#AABCA9</drawable>
+    <drawable name="soft_yellow">#DEDBAB</drawable>
+    <drawable name="dark_gray">#888888</drawable>
+</resources>

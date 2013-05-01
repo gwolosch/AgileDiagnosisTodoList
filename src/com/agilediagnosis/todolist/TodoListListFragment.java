@@ -36,6 +36,8 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	
 	private static final String TAG = TodoListListFragment.class.getSimpleName();
 	
+	private Boolean serverTaskRunning = false;
+	
     private TodoListAdapter mTodoListAdapter = null;
     private ListView mListView = null;
     private LinearLayout mDataContainer = null;
@@ -95,13 +97,19 @@ public class TodoListListFragment extends TodoListBaseListFragment {
             TextView titleTextView = (TextView) convertView.findViewById(R.id.title);
             titleTextView.setText(this.fields.get(position));
             
-            CheckBox completedCheckBox = (CheckBox) convertView.findViewById(R.id.completed);
+            final CheckBox completedCheckBox = (CheckBox) convertView.findViewById(R.id.completed);
             completedCheckBox.setChecked(this.todos.get(position).isCompleted());
             completedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 				@Override
 				public void onCheckedChanged(CompoundButton cb, boolean completed) {
-					todos.get(position).setCompleted(completed);
+					if (serverTaskRunning) {
+						ALog.v(TAG, "server task running. wait for it to finish.");
+						Toast.makeText(getActivity(), R.string.server_task_running_wait, Toast.LENGTH_LONG).show();
+						completedCheckBox.setChecked(!completed);
+					} else {
+						todos.get(position).setCompleted(completed);
+					}
 				}
             	
             });
@@ -125,7 +133,9 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 
 			@Override
 			public void onClick(View arg0) {
-				setTodos(mTodoListAdapter.getTodos());
+				synchronized(serverTaskRunning) {
+					setTodos(mTodoListAdapter.getTodos());
+				}
 			}
 			
 		});
@@ -174,6 +184,9 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	        		break;
 	        	}
         	}
+	    	synchronized(serverTaskRunning) {
+	    		serverTaskRunning = false;
+	    	}
         }
     };
     
@@ -201,6 +214,9 @@ public class TodoListListFragment extends TodoListBaseListFragment {
     	}
     }
     
+    /*
+     * Note you must send a message to Handler in onPostExecute
+     */
 	private class ServerTask extends AsyncTask<Void, Void, Void> {
 		
 		private boolean status = false;
@@ -220,16 +236,29 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 			this.getTodosDialog.setOnCancelListener(new OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface dialog) {
-					//TODO cancel this asynctask!!!
 	                cancel(true);
 	            }
 	        });
 		}
 		
+		protected void execute() {
+			synchronized(serverTaskRunning) {
+				if (serverTaskRunning) {
+					ALog.v(TAG, "serverTaskRunning, not starting it.");
+					Toast.makeText(getActivity(), R.string.server_task_already_running, Toast.LENGTH_LONG).show();
+				} else {
+					serverTaskRunning = true;
+					super.execute();
+				}
+			}
+		}
+		
+		@Override
 	     protected void onProgressUpdate(Void... arg0) {
 	    	 ALog.v(TAG, "");
 	     }
 	     
+	     @Override
 	     protected void onPostExecute(Void result) {
 	    	 ALog.v(TAG, "");
 	    	 this.getTodosDialog.dismiss();
@@ -241,6 +270,14 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 	    	 ALog.v(TAG, "");
 	    	 this.doInBackground.run();
 	    	 return null;
+	     }
+	     
+	     @Override
+	     protected void onCancelled () {
+	    	 ALog.v(TAG, "");
+	    	 synchronized(serverTaskRunning) {
+	    		 serverTaskRunning = false;
+	    	 }
 	     }
      
 	     public boolean isStatus() {
