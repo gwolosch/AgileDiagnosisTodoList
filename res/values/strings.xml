@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TodoList</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_refresh">Refresh Todos from server</string>
     <string name="hello_world">Hello world!</string>
     <string name="getting_todos_dialog">Loading Todos from server...</string>
     <string name="setting_todos_dialog">Updating Todos on server...</string>

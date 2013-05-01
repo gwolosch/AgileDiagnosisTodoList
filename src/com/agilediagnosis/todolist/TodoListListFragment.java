@@ -137,6 +137,11 @@ public class TodoListListFragment extends TodoListBaseListFragment {
 		return fragmentRootView;
 	}
 	
+	public void refreshTodos() {
+		ALog.v(TAG, "");
+		getTodos();
+	}
+	
     final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message m) {

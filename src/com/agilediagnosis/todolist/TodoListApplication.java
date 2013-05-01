@@ -18,6 +18,8 @@ public class TodoListApplication extends Application {
 	}
 	public static final TodoWebFormat todoWebFormat = TodoWebFormat.JSON;
 	public static final String TODO_LIST_WEB_APP_URL = "http://www.gregwoloschyn.com";
+	public static final int HTTP_TIMEOUT_CONNECTION_MILLIS = 10000;
+	public static final int HTTP_TIMEOUT_SOCKET_MILLIS = 15000;
 	
 	public void onCreate() {
 		super.onCreate();

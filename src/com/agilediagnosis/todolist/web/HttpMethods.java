@@ -13,7 +13,11 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
+import com.agilediagnosis.todolist.TodoListApplication;
 import com.agilediagnosis.todolist.logging.ALog;
 
 public class HttpMethods
@@ -41,7 +45,12 @@ public class HttpMethods
 				strURL += "?" + params;
 			}
 			try {
-				HttpClient httpclient = new DefaultHttpClient();
+				HttpParams httpParameters = new BasicHttpParams();
+				int timeoutConnection = TodoListApplication.HTTP_TIMEOUT_CONNECTION_MILLIS;
+				HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+				int timeoutSocket = TodoListApplication.HTTP_TIMEOUT_SOCKET_MILLIS;
+				HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+				HttpClient httpclient = new DefaultHttpClient(httpParameters);
 				HttpResponse response = httpclient.execute(new HttpGet(strURL));
 				InputStream content = response.getEntity().getContent();
 				result = inputStreamToString(content);
@@ -57,7 +66,12 @@ public class HttpMethods
 		ALog.v(TAG, "");
 		String result = null;
 		if (_URL.startsWith("http://")) {
-			HttpClient httpclient = new DefaultHttpClient();
+			HttpParams httpParameters = new BasicHttpParams();
+			int timeoutConnection = TodoListApplication.HTTP_TIMEOUT_CONNECTION_MILLIS;
+			HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+			int timeoutSocket = TodoListApplication.HTTP_TIMEOUT_SOCKET_MILLIS;
+			HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+			HttpClient httpclient = new DefaultHttpClient(httpParameters);
 			HttpPost httppost = new HttpPost(_URL);
 			try {
 				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

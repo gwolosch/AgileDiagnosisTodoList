@@ -2,9 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/soft_green">
   	<RelativeLayout android:id="@+id/title_container"
-  	    android:background="#dedede"
+  	    android:background="@drawable/light_gray"
 		android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="4"
@@ -16,14 +18,18 @@
         android:paddingRight="5dip"
         android:paddingBottom="5dip"
         android:paddingLeft="5dip">
-    	<TextView android:id="@+id/title"
-    	    	  android:layout_width="wrap_content"
-    	    	  android:layout_height="wrap_content"
-    	    	  android:layout_centerVertical="true"
-    	    	  android:ellipsize="end"
-				  android:maxLines="1"
-				  android:scrollHorizontally="true"
-				  android:singleLine="true" />
+		<HorizontalScrollView
+			android:orientation="horizontal"
+			android:layout_width="match_parent" 
+			android:layout_height="match_parent">
+	    	<TextView android:id="@+id/title"
+	    	    	  android:layout_width="wrap_content"
+	    	    	  android:layout_height="wrap_content"
+	    	    	  android:textColor="@drawable/dark_gray"
+					  android:maxLines="1"
+					  android:scrollHorizontally="true"
+					  android:singleLine="true" />
+    	</HorizontalScrollView>
    	</RelativeLayout>
    	<RelativeLayout android:id="@+id/checkbox_container"
 		android:layout_width="0dip"
